@@ -22,8 +22,8 @@
     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU'
         crossorigin='anonymous'>
     <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
-<style class="cp-pen-styles">
-body {
+    <style class="cp-pen-styles">
+        body {
 	padding-top: 20px;
 }
 .product {
@@ -52,8 +52,9 @@ span {
 }
 </style>
 </head>
+
 <body>
-<?php
+    <?php
 header("content-type:charset=utf-8");
 // Initialize variable for database credentials
 $dbhost = '127.0.0.1';
@@ -126,12 +127,12 @@ $x =0;
                         <option value="">Show All</option>
                     </select>
                 </div>
-                <!-- <div class="form-group col-sm-3 col-xs-6">
+                <div class="form-group col-sm-3 col-xs-6">
                     <select data-filter="model" class="filter-model filter form-control">
                         <option value="">Select Sup group</option>
                         <option value="">Show All</option>
                     </select>
-                </div> -->
+                </div>
                 <div class="form-group col-sm-3 col-xs-6">
                     <select data-filter="type" class="filter-type filter form-control">
                         <option value="">Select Location</option>
@@ -148,17 +149,17 @@ $x =0;
     <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
     <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
     <script>
-        let data = <?php echo json_encode($dbdata); ?>;
-        data33 ="img/";
-                for(i=0;i<data.length;i++){
-                    data22 = [data[i].Entity_Name];
-                    // data33 = JSON.stringify("img/" + data2[i].P_Name);
-                    data33 = data33+data[i].P_Name;
-                    data[i].Entity_Name = data22
-                    data[i].P_Name = data33;
-                }
-                console.log(data[0].P_Name);
-                console.log(data);
+        let data = <?php echo json_encode($dbdata);?>;
+        data33 = "img/";
+        for (i = 0; i < data.length; i++) {
+            data22 = [data[i].Entity_Name];
+            // data33 = JSON.stringify("img/" + data2[i].P_Name);
+            data33 = data33 + data[i].P_Name;
+            data[i].Entity_Name = data22
+            data[i].P_Name = data33;
+        }
+        console.log(data[0].P_Name);
+        console.log(data);
         // data = JSON.parse(data);
         // console.log(typeof(data));
         // console.log(data);
@@ -218,18 +219,19 @@ $x =0;
         // 		"image": "http://placehold.it/800x600/418cf4/fff"
         // 	}
         // ];
-        let arr = data.reduce((acc,cur) => {
-                      let index = acc.findIndex(el => el.AN_Name === cur.AN_Name);
-                      if (index > -1){
-                            acc[index].Entity_Name = [...acc[index].Entity_Name, ...cur.Entity_Name]
-                            return acc
-                      }else{
-                            return [...acc, cur]
-                      }
-                      }, [])
-                      data=arr;
+        let arr = data.reduce((acc, cur) => {
+            let index = acc.findIndex(el => el.AN_Name === cur.AN_Name);
+            if (index > -1) {
+                acc[index].Entity_Name = [...acc[index].Entity_Name, ...cur.Entity_Name]
+                return acc
+            } else {
+                return [...acc, cur]
+            }
+        }, [])
 
-        console.log(typeof(data));
+        data = arr;
+
+        console.log(typeof (data));
         console.log(data);
 
 
@@ -241,37 +243,40 @@ $x =0;
         //consol.log(data);
         // alert(data['make']);
         for (var i = 0; i < data.length; i++) {
-            for(var j=0;j<data[i].Entity_Name.length;j++){
-            if (window.CP.shouldStopExecution(1)) { break; }
-            var make = data[i].AN_Name,
-                type = data[i].AN_Adress,
-                image = data[i].P_Name;
-                model = data[i].Entity_Name;
+            for (var j = 0; j < data[i].Entity_Name.length; j++) {
+                if (window.CP.shouldStopExecution(1)) { break; }
+                data[i].P_Name = "img/fff.png"
+                var make = data[i].AN_Name,
+                    type = data[i].AN_Adress,
+                    image = data[i].P_Name;
+                    model = data[i].Entity_Name;
 
-              
-            //create dropdown of makes
-            if (makes.indexOf("<option value='" + make + "'>" + make + "</option>") == -1) {
-                makes += "<option value='" + make + "'>" + make + "</option>";
+
+                //create dropdown of makes
+                if (makes.indexOf("<option value='" + make + "'>" + make + "</option>") == -1) {
+                    makes += "<option value='" + make + "'>" + make + "</option>";
+                }
+
+                //create dropdown of models
+
+                if (models.indexOf("<option value='" + model[j] + "'>" + model[j] + "</option>") == -1) {
+                    models += "<option value='" + model[j] + "'>" + model[j] + "</option>";
+                }
+
+
+                //create dropdown of types
+                if (types.indexOf("<option value='" + type + "'>" + type + "</option>") == -1) {
+                    types += "<option value='" + type + "'>" + type + "</option>";
+                }
             }
-
-            //create dropdown of models
-
-                if (models.indexOf("<option value='" + data[i].model +  "'>" + data[i].model + "</option>") == -1) {
-                models += "<option value='" + data[i].model + "'>" + data[i].model + "</option>";
-            }
-            
-
-            //create dropdown of types
-            if (types.indexOf("<option value='" + type + "'>" + type + "</option>") == -1) {
-                types += "<option value='" + type + "'>" + type + "</option>";
-            }
+            //create product cards
+            products += "<div class='col-sm-4 product' data-make='" + make + "' data-model='" + model + "' data-type='" + type + "'><div class='product-inner text-left'><img src='" + image + "'><br /><div><span class='fas fa-landmark' style='font-size:24px'></span> : " + make + "</div><br /><div><span class='fas fa-briefcase' style='font-size:24px'></span> : " + data[i].Entity_Name[0] + "</div><br /><div><span class='fas fas fa-map-marker-alt' style='font-size:24px'></span> : " + type + "</div><br /></div></div>";
         }
-        //create product cards
-        products += "<div class='col-sm-4 product' data-make='" + make + "' data-model='" + model + "' data-type='" + type + "'><div class='product-inner text-left'><img src='" + image + "'><br /><div><span class='fas fa-landmark' style='font-size:24px'></span> : " + make + "</div><br /><div><span class='fas fa-briefcase' style='font-size:24px'></span> : " + data[i].Entity_Name[0]  + "</div><br /><div><span class='fas fas fa-map-marker-alt' style='font-size:24px'></span> : " + type + "</div><br /></div></div>";
-        }
+        console.log(i);
+        
         window.CP.exitedLoop(1);
 
-
+        
         $("#products").html(products);
         $(".filter-make").append(makes);
         $(".filter-model").append(models);
