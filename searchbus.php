@@ -62,7 +62,12 @@ $dbpass = '';
 $dbname = 'oskb';
 //Create database connection
 $dblink = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-$sql = "SELECT `AN_Name`,`AN_Address`,`Entity_Name` FROM `announce` as d1 INNER JOIN `entity_has_announce` as d2 ON d1.AN_ID = d2.announce_AN_ID INNER JOIN `entity` as d3 ON d2.entity_ID_Entity = d3.ID_Entity";
+$sql = ("SELECT `AN_Name`,`Entity_Name`,`AN_Address`,`P_Name` FROM `announce` as d1 
+INNER JOIN `entity_has_announce` as d2 
+ON d1.AN_ID = d2.announce_AN_ID 
+INNER JOIN `entity` as d3 
+ON d2.entity_ID_Entity = d3.ID_Entity 
+INNER JOIN `pictures` as d4");
 
 $x =0;
 //Check connection was successful
@@ -72,7 +77,7 @@ $x =0;
   }
 //Fetch 3 rows from actor table
   $dblink->set_charset("utf8");
-  $result = $dblink->query("SELECT `AN_Name`,`AN_Address`,`Entity_Name` FROM `announce` as d1 INNER JOIN `entity_has_announce` as d2 ON d1.AN_ID = d2.announce_AN_ID INNER JOIN `entity` as d3 ON d2.entity_ID_Entity = d3.ID_Entity");
+  $result = $dblink->query($sql);
   
 //   foreach($result as $sql2){
 //     $make[$x] = $sql2['AN_Name'];
@@ -143,70 +148,80 @@ $x =0;
     <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
     <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
     <script>
-
+        let data = <?php echo json_encode($dbdata); ?>;
+        data33 ="img/";
+                for(i=0;i<data.length;i++){
+                    data22 = [data[i].Entity_Name];
+                    // data33 = JSON.stringify("img/" + data2[i].P_Name);
+                    data33 = data33+data[i].P_Name;
+                    data[i].Entity_Name = data22
+                    data[i].P_Name = data33;
+                }
+                console.log(data[0].P_Name);
+                console.log(data);
         // data = JSON.parse(data);
         // console.log(typeof(data));
         // console.log(data);
-        data = [
-        	{
-        		"make": "PRIME Wellness Group Co., Ltd.",
-        		"model": ["งานก่อสร้างอาคาร","jtrjtrjrtkrtk"],
-        		"type": "นราธิวาส",
-        		"image": "img/fff.png"
-        	},
-        	{
-        		"make": "Mycollection",
-        		"model": ["(*&^%$#W","85975650o6po87pt"],
-        		"type": "ปทุมธานี",
-        		"image": "http://placehold.it/800x600/418cf4/fff"
-        	},
-        	{
-        		"make": "เอชเคเนชั่นแนลโปรดัคทส์จำกัด",
-        		"model": ["54uj5ekj[e[rkjeork","yweryhsrfjdfj"],
-        		"type": "นนทบุรี",
-        		"image": "http://placehold.it/800x600/418cf4/fff"
-        	},
-        	{
-        		"make": "Proffer Complement Co.,Ltd",
-        		"model": ["hrhwrhsehaehad","qy43wyrewuhystrut"],
-        		"type": "นครปฐม",
-        		"image": "http://placehold.it/800x600/418cf4/fff"
-        	},
-        	{
-        		"make": "First Floor Consultants Co.ltd.",
-        		"model": ["y4wu5ei5irt","Y4A3EURSEDJDFJ"],
-        		"type": "นครศรีธรรมราช",
-        		"image": "http://placehold.it/800x600/418cf4/fff"
-        	},
-        	{
-        		"make": "97 Home Builder",
-        		"model": ["gshshjsjs","jtrdjfgcjnfcvn"],
-        		"type": "ภูเก็ต",
-        		"image": "http://placehold.it/800x600/418cf4/fff"
-        	},
-        	{
-        		"make": "Inter management co.ltd.",
-        		"model": ["เำำไเ้ำไ้ำไ้ไำ้","hershxdfvnxcvn"],
-        		"type": "พังงา",
-        		"image": "http://placehold.it/800x600/418cf4/fff"
-            },
-            {
-        		"make": "Admin %$#@@@!",
-        		"model": ["แอร์","45ktfgkfgmghm","gewgwegewaaa"],
-        		"type": "กรุงเทพมหานคร",
-        		"image": "http://placehold.it/800x600/418cf4/fff"
-        	},
-            {
-        		"make": "Admin %$#@@@!",
-        		"model": ["พัดลม","กาแฟ","โอวัลติน"],
-        		"type": "กรุงเทพมหานคร",
-        		"image": "http://placehold.it/800x600/418cf4/fff"
-        	}
-        ];
+        // data = [
+        // 	{
+        // 		"make": "PRIME Wellness Group Co., Ltd.",
+        // 		"model": ["งานก่อสร้างอาคาร","jtrjtrjrtkrtk"],
+        // 		"type": "นราธิวาส",
+        // 		"image": "img/fff.png"
+        // 	},
+        // 	{
+        // 		"make": "Mycollection",
+        // 		"model": ["(*&^%$#W","85975650o6po87pt"],
+        // 		"type": "ปทุมธานี",
+        // 		"image": "http://placehold.it/800x600/418cf4/fff"
+        // 	},
+        // 	{
+        // 		"make": "เอชเคเนชั่นแนลโปรดัคทส์จำกัด",
+        // 		"model": ["54uj5ekj[e[rkjeork","yweryhsrfjdfj"],
+        // 		"type": "นนทบุรี",
+        // 		"image": "http://placehold.it/800x600/418cf4/fff"
+        // 	},
+        // 	{
+        // 		"make": "Proffer Complement Co.,Ltd",
+        // 		"model": ["hrhwrhsehaehad","qy43wyrewuhystrut"],
+        // 		"type": "นครปฐม",
+        // 		"image": "http://placehold.it/800x600/418cf4/fff"
+        // 	},
+        // 	{
+        // 		"make": "First Floor Consultants Co.ltd.",
+        // 		"model": ["y4wu5ei5irt","Y4A3EURSEDJDFJ"],
+        // 		"type": "นครศรีธรรมราช",
+        // 		"image": "http://placehold.it/800x600/418cf4/fff"
+        // 	},
+        // 	{
+        // 		"make": "97 Home Builder",
+        // 		"model": ["gshshjsjs","jtrdjfgcjnfcvn"],
+        // 		"type": "ภูเก็ต",
+        // 		"image": "http://placehold.it/800x600/418cf4/fff"
+        // 	},
+        // 	{
+        // 		"make": "Inter management co.ltd.",
+        // 		"model": ["เำำไเ้ำไ้ำไ้ไำ้","hershxdfvnxcvn"],
+        // 		"type": "พังงา",
+        // 		"image": "http://placehold.it/800x600/418cf4/fff"
+        //     },
+        //     {
+        // 		"make": "Admin %$#@@@!",
+        // 		"model": ["แอร์","45ktfgkfgmghm","gewgwegewaaa"],
+        // 		"type": "กรุงเทพมหานคร",
+        // 		"image": "http://placehold.it/800x600/418cf4/fff"
+        // 	},
+        //     {
+        // 		"make": "Admin %$#@@@!",
+        // 		"model": ["พัดลม","กาแฟ","โอวัลติน"],
+        // 		"type": "กรุงเทพมหานคร",
+        // 		"image": "http://placehold.it/800x600/418cf4/fff"
+        // 	}
+        // ];
         let arr = data.reduce((acc,cur) => {
-                      let index = acc.findIndex(el => el.make === cur.make);
+                      let index = acc.findIndex(el => el.AN_Name === cur.AN_Name);
                       if (index > -1){
-                            acc[index].model = [...acc[index].model, ...cur.model]
+                            acc[index].Entity_Name = [...acc[index].Entity_Name, ...cur.Entity_Name]
                             return acc
                       }else{
                             return [...acc, cur]
@@ -226,12 +241,12 @@ $x =0;
         //consol.log(data);
         // alert(data['make']);
         for (var i = 0; i < data.length; i++) {
-            for(var j=0;j<data[i].model.length;j++){
+            for(var j=0;j<data[i].Entity_Name.length;j++){
             if (window.CP.shouldStopExecution(1)) { break; }
-            var make = data[i].make,
-                type = data[i].type,
-                image = data[i].image;
-                model = data[i].model;
+            var make = data[i].AN_Name,
+                type = data[i].AN_Adress,
+                image = data[i].P_Name;
+                model = data[i].Entity_Name;
 
               
             //create dropdown of makes
@@ -252,7 +267,7 @@ $x =0;
             }
         }
         //create product cards
-        products += "<div class='col-sm-4 product' data-make='" + make + "' data-model='" + model + "' data-type='" + type + "'><div class='product-inner text-left'><img src='" + image + "'><br /><div><span class='fas fa-landmark' style='font-size:24px'></span> : " + make + "</div><br /><div><span class='fas fa-briefcase' style='font-size:24px'></span> : " + data[i].model[0]  + "</div><br /><div><span class='fas fas fa-map-marker-alt' style='font-size:24px'></span> : " + type + "</div><br /></div></div>";
+        products += "<div class='col-sm-4 product' data-make='" + make + "' data-model='" + model + "' data-type='" + type + "'><div class='product-inner text-left'><img src='" + image + "'><br /><div><span class='fas fa-landmark' style='font-size:24px'></span> : " + make + "</div><br /><div><span class='fas fa-briefcase' style='font-size:24px'></span> : " + data[i].Entity_Name[0]  + "</div><br /><div><span class='fas fas fa-map-marker-alt' style='font-size:24px'></span> : " + type + "</div><br /></div></div>";
         }
         window.CP.exitedLoop(1);
 
