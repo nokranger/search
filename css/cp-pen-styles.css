@@ -1,0 +1,27 @@
+body {
+	padding-top: 20px;
+}
+.product {
+	margin-bottom: 20px;
+}
+.product-inner {
+	box-shadow: 0 0 10px rgba(0,0,0,.2);
+	padding: 10px;
+}
+/* .product img {
+    margin-bottom: 10px;
+
+} */
+img {
+    height: 170px;
+    width: 200px;
+    margin:auto;
+    margin-bottom:10px;
+    margin-top:10px;
+    display:block;
+
+}
+span {
+
+    margin-left:10px;
+}
