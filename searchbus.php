@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="robots" content="noindex, nofollow">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="css/cp-pen-styles.css">
     <title>Contruction Business Directory</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -22,35 +23,7 @@
     <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU'
         crossorigin='anonymous'>
     <link rel='stylesheet prefetch' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
-    <style class="cp-pen-styles">
-        body {
-	padding-top: 20px;
-}
-.product {
-	margin-bottom: 20px;
-}
-.product-inner {
-	box-shadow: 0 0 10px rgba(0,0,0,.2);
-	padding: 10px;
-}
-/* .product img {
-    margin-bottom: 10px;
 
-} */
-img {
-    height: 170px;
-    width: 200px;
-    margin:auto;
-    margin-bottom:10px;
-    margin-top:10px;
-    display:block;
-
-}
-span {
-
-    margin-left:10px;
-}
-</style>
 </head>
 
 <body>
@@ -271,8 +244,9 @@ $x =0;
             }
             //create product cards
             products += "<div class='col-sm-4 product' data-make='" + make + "' data-model='" + model + "' data-type='" + type + "'><div class='product-inner text-left'><img src='" + image + "'><br /><div><span class='fas fa-landmark' style='font-size:24px'></span> : " + make + "</div><br /><div><span class='fas fa-briefcase' style='font-size:24px'></span> : " + data[i].Entity_Name[0] + "</div><br /><div><span class='fas fas fa-map-marker-alt' style='font-size:24px'></span> : " + type + "</div><br /></div></div>";
+            // console.log(j);
         }
-        console.log(i);
+        
         
         window.CP.exitedLoop(1);
 
@@ -298,6 +272,7 @@ $x =0;
             var filters = "";
 
             for (var key in filtersObject) {
+                
                 if (window.CP.shouldStopExecution(2)) { break; }
                 if (filtersObject.hasOwnProperty(key)) {
                     filters += "[data-" + key + "='" + filtersObject[key] + "']";
