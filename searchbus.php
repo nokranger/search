@@ -95,21 +95,21 @@ $x =0;
         <div class="row" id="filter">
             <form>
                 <div class="form-group col-sm-3 col-xs-6">
-                    <select data-filter="make" class="filter-make filter form-control">
+                    <select id="sel1" data-filter="make" class="filter-make filter form-control">
                         <option value="">Select Business</option>
-                        <option value="">Show All</option>
+                        <option value="Show All">Show All</option>
                     </select>
                 </div>
                 <div class="form-group col-sm-3 col-xs-6">
-                    <select data-filter="model" class="filter-model filter form-control">
+                    <select id="sel2" data-filter="model" class="filter-model filter form-control">
                         <option value="">Select Sup group</option>
-                        <option value="">Show All</option>
+                        <option value="Show All">Show All</option>
                     </select>
                 </div>
                 <div class="form-group col-sm-3 col-xs-6">
-                    <select data-filter="type" class="filter-type filter form-control">
+                    <select id="sel3" data-filter="type" class="filter-type filter form-control">
                         <option value="">Select Location</option>
-                        <option value="">Show All</option>
+                        <option value="Show All">Show All</option>
                     </select>
                 </div>
             </form>
@@ -203,7 +203,6 @@ $x =0;
         }, [])
 
         data = arr;
-
         console.log(typeof (data));
         console.log(data);
 
@@ -260,33 +259,101 @@ $x =0;
 
         //on filter change
         $(".filter").on("change", function () {
-            var filterName = $(this).data("filter"),
-                filterVal = $(this).val();
+            // var filterName = $(this).data("filter"),
+            //     filterVal = $(this).val();
+            
+            var query1 =  ($('#sel1').val()).toLowerCase()
+            var query2 =  ($('#sel2').val()).toLowerCase()
+            var query3 =  ($('#sel3').val()).toLowerCase()
 
-            if (filterVal == "") {
-                delete filtersObject[filterName];
-            } else {
-                filtersObject[filterName] = filterVal;
-            }
-
-            var filters = "";
-
-            for (var key in filtersObject) {
+            
+            console.log('test1', query1)
+            console.log('test2', query2)
+            console.log('test3', query3)
+            
                 
-                if (window.CP.shouldStopExecution(2)) { break; }
-                if (filtersObject.hasOwnProperty(key)) {
-                    filters += "[data-" + key + "='" + filtersObject[key] + "']";
+            $(".product").hide();
+            $(".product").each(function () {
+                var make = $(this).data("make").toLowerCase(),
+                    model = $(this).data("model").toLowerCase(),
+                    type = $(this).data("type").toLowerCase();
+                
+
+                if(query1 == 'show all' && query2 == 'show all' && query3 == 'show all') {
+                    $(this).show();
+                    console.log('alll')
+                        return
+                }else if(query1 == 'show all' && query2 == 'show all') {
+                    if (type.indexOf(query3) > -1) { // str = 'hello'  ;   str.indexOf('asdasd') = -1
+                        $(this).show();
+                        return
+                    }
+                }else if(query1 == 'show all' && query3 == 'show all') {
+                    if (model.indexOf(query2) > -1) {
+                        $(this).show();
+                        return
+                    }
+                }else if(query2 == 'show all' && query3 == 'show all') {
+                    if (make.indexOf(query1) > -1) {
+                        $(this).show();
+                        return
+                    }
+                }else if(query1 == 'show all') {
+                    if (model.indexOf(query2) > -1 && type.indexOf(query3) > -1) {
+                        $(this).show();
+                        return
+                    }
+                }else if(query2 == 'show all') {
+                    if (make.indexOf(query1) > -1 && type.indexOf(query3) > -1) {
+                        $(this).show();
+                        return
+                    }
+                }else if(query3 == 'show all') {
+                    if (make.indexOf(query1) > -1 && model.indexOf(query2) > -1) {
+                        $(this).show();
+                        return
+                    }
                 }
-            }
-            window.CP.exitedLoop(2);
-
-
-            if (filters == "") {
-                $(".product").show();
-            } else {
-                $(".product").hide();
-                $(".product").hide().filter(filters).show();
-            }
+                
+                if(query1 && query2 && query3) {
+                    console.log('123')
+                    if (make.indexOf(query1) > -1 && model.indexOf(query2) > -1 && type.indexOf(query3) > -1) {
+                        $(this).show();
+                    }
+                }else if(query1 && query2) {
+                    console.log('12')
+                    if (make.indexOf(query1) > -1 && model.indexOf(query2) > -1 ) {
+                        $(this).show();
+                    }
+                }else if(query1 && query3) {
+                    console.log('13')
+                    if (make.indexOf(query1) > -1 && type.indexOf(query3) > -1 ) {
+                        $(this).show();
+                    }
+                }else if(query2 && query3) {
+                    console.log('23')
+                    if (model.indexOf(query2) > -1 && type.indexOf(query3) > -1 ) {
+                        $(this).show();
+                    }
+                }else if(query1) {
+                    console.log('1')
+                    if(make.indexOf(query1) > -1) {
+                        $(this).show();
+                    }
+                }else if(query2) {
+                    console.log('2')
+                    if(model.indexOf(query2) > -1) {
+                        $(this).show();
+                    }
+                }else if(query3) {
+                    console.log('3')
+                    if(type.indexOf(query3) > -1) {
+                        $(this).show();
+                    }
+                }
+                
+            });
+            
         });
 
         //on search form submit
